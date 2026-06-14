@@ -1,0 +1,50 @@
+.blog-page {
+	max-width: 920px;
+}
+.blog-head {
+	margin-bottom: 2.5rem;
+	max-width: 60ch;
+}
+.posts {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 1.1rem;
+}
+.post-card {
+	display: block;
+	padding: clamp(1.3rem, 3vw, 1.8rem);
+	transition: transform 0.28s var(--ease), border-color 0.28s var(--ease), background 0.28s var(--ease);
+}
+.post-card:hover {
+	transform: translateY(-3px);
+	border-color: var(--line-strong);
+	background: var(--glass-bg-hover);
+}
+.post-card-meta {
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	color: var(--muted);
+	margin-bottom: 0.6rem;
+}
+.post-card-title {
+	margin: 0 0 0.45rem;
+	font-size: clamp(1.3rem, 3vw, 1.7rem);
+	color: var(--ink);
+}
+.post-card-desc {
+	margin: 0 0 1rem;
+	color: var(--muted);
+}
+.read {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	color: var(--cyan);
+	font-size: 0.9rem;
+	font-weight: 500;
+}
+.post-card:hover .read {
+	color: var(--ink);
+}
