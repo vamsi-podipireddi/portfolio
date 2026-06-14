@@ -1,6 +1,6 @@
 {
-	"name": "astro-blog-starter-template",
-	"description": "Build a personal website, blog, or portfolio with Astro.",
+	"name": "portfolio",
+	"description": "Personal site + portfolio for Vamsi Krishna Podipireddi.",
 	"cloudflare": {
 		"label": "Astro Framework Starter",
 		"products": [
