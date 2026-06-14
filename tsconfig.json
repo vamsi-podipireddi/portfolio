@@ -1,8 +1,20 @@
 {
-	"extends": "astro/tsconfigs/strict",
-	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist"],
+	"include": ["**/*.ts", "**/*.tsx", ".react-router/types/**/*"],
+	"exclude": ["build", "node_modules"],
 	"compilerOptions": {
-		"strictNullChecks": true
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"types": ["vite/client", "node"],
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"strict": true,
+		"strictNullChecks": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"allowImportingTsExtensions": true,
+		"rootDirs": [".", "./.react-router/types"]
 	}
 }

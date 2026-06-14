@@ -1,5 +1,7 @@
 // Central site data. Edit here to update the whole site.
 
+export const SITE = "https://vamsikrishnapodipireddi.in";
+
 export const SITE_TITLE = "Vamsi Krishna Podipireddi";
 export const SITE_DESCRIPTION =
 	"Engineer and builder. I make systems-y things — local AI, developer tooling, and interactive learning. Selected projects, with source and live links.";

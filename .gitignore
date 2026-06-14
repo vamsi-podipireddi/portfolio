@@ -198,5 +198,10 @@ dist
 .dev.vars*
 !.dev.vars.example
 
-### Astro ###
-.astro/
+### React Router ###
+build/
+.react-router/
+
+### Generated at build (scripts/generate-feeds.mjs) ###
+public/rss.xml
+public/sitemap.xml

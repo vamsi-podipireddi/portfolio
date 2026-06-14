@@ -1,39 +1,37 @@
 {
 	"name": "portfolio",
 	"description": "Personal site + portfolio for Vamsi Krishna Podipireddi.",
-	"cloudflare": {
-		"label": "Astro Framework Starter",
-		"products": [
-			"Workers"
-		],
-		"categories": [],
-		"preview_icon_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/394ca3c9-d351-4036-035a-9f6dfa26dd00/public",
-		"preview_image_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/f40a6577-eed5-4f3e-cef4-b5ef0a1be100/preview",
-		"publish": true
-	},
-	"dependencies": {
-		"@astrojs/cloudflare": "12.6.12",
-		"@astrojs/mdx": "4.3.13",
-		"@astrojs/rss": "4.0.14",
-		"@astrojs/sitemap": "3.6.1",
-		"astro": "5.16.9",
-		"typescript": "5.9.3"
-	},
-	"devDependencies": {
-		"wrangler": "4.88.0"
-	},
+	"private": true,
+	"type": "module",
 	"engines": {
 		"node": ">=22"
 	},
-	"private": true,
 	"scripts": {
-		"astro": "astro",
-		"build": "astro build",
-		"cf-typegen": "wrangler types",
-		"check": "astro build && tsc && wrangler deploy --dry-run",
-		"deploy": "wrangler deploy",
-		"dev": "astro dev",
-		"preview": "astro build && wrangler dev"
+		"dev": "react-router dev",
+		"build": "node scripts/generate-og.mjs && node scripts/generate-feeds.mjs && react-router build && cp build/client/404/index.html build/client/404.html",
+		"preview": "vite preview",
+		"typecheck": "react-router typegen && tsc"
 	},
-	"type": "module"
+	"dependencies": {
+		"@react-router/node": "^7.9.1",
+		"isbot": "^5.1.31",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"react-router": "^7.9.1"
+	},
+	"devDependencies": {
+		"@mdx-js/rollup": "^3.1.1",
+		"@react-router/dev": "^7.9.1",
+		"@shikijs/rehype": "^3.13.0",
+		"@types/node": "^22.19.21",
+		"@types/react": "^19.1.13",
+		"@types/react-dom": "^19.1.9",
+		"gray-matter": "^4.0.3",
+		"remark-frontmatter": "^5.0.0",
+		"remark-mdx-frontmatter": "^5.2.0",
+		"sharp": "^0.34.4",
+		"shiki": "^3.13.0",
+		"typescript": "^5.9.3",
+		"vite": "^6.3.6"
+	}
 }
