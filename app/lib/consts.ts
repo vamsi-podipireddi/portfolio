@@ -28,11 +28,11 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
 	{
-		name: "OS Academy",
-		tagline: "Learn operating systems by breaking them",
+		name: "Scroll",
+		tagline: "Learn systems concepts by breaking them",
 		tags: ["React", "TypeScript", "Vite", "Education"],
 		github: "https://github.com/vamsi-podipireddi/brillant",
-		live: "https://learn.vamsikrishnapodipireddi.in",
+		live: "https://scroll.vamsikrishnapodipireddi.in",
 		icon: Cpu,
 		accent: ["#7c5cff", "#22d3ee"],
 		featured: true,
