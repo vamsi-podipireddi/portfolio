@@ -1,6 +1,6 @@
-import type { CSSProperties } from "react";
+import { ExternalLink } from "lucide-react";
 import type { Project } from "../lib/consts";
-import { Icon } from "./Icon";
+import { GithubIcon } from "./GithubIcon";
 import "./ProjectCard.css";
 
 interface Props {
@@ -8,19 +8,13 @@ interface Props {
 }
 
 export function ProjectCard({ project }: Props) {
-	const { name, subtitle, tagline, description, tags, github, live, glyph, accent, featured } =
-		project;
-	const style = { "--c1": accent[0], "--c2": accent[1] } as CSSProperties;
+	const { name, subtitle, tagline, github, live, icon: ProjectIcon, featured } = project;
 
 	return (
-		<article
-			className={["project", "glass", featured && "featured"].filter(Boolean).join(" ")}
-			style={style}
-		>
-			<div className="glow" aria-hidden="true" />
+		<article className="project">
 			<div className="project-head">
-				<span className="glyph" aria-hidden="true">
-					{glyph}
+				<span className="glyph">
+					<ProjectIcon className="glyph-icon" size={22} aria-hidden="true" />
 				</span>
 				{featured && <span className="badge">Featured</span>}
 			</div>
@@ -30,15 +24,6 @@ export function ProjectCard({ project }: Props) {
 				{subtitle && <span className="subtitle"> {subtitle}</span>}
 			</h3>
 			<p className="project-tagline">{tagline}</p>
-			<p className="project-desc">{description}</p>
-
-			<ul className="tags" aria-label="Tech stack">
-				{tags.map((t) => (
-					<li className="tag" key={t}>
-						{t}
-					</li>
-				))}
-			</ul>
 
 			<div className="project-links">
 				{live && (
@@ -48,12 +33,12 @@ export function ProjectCard({ project }: Props) {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Live <Icon name="external" size={15} />
+						Live <ExternalLink size={15} />
 					</a>
 				)}
 				{github && (
 					<a className="btn btn-sm" href={github} target="_blank" rel="noopener noreferrer">
-						<Icon name="github" size={15} /> Code
+						<GithubIcon size={15} /> Code
 					</a>
 				)}
 			</div>
