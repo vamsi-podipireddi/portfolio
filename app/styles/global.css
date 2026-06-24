@@ -1,48 +1,48 @@
 /*
-  Design system for vamsikrishnapodipireddi.in
-  Modern glassy / dark. Tokens first, then base, then utilities.
+  Design system — modern glassy / dark.
+  Tokens first, then base, then utilities.
 */
 
 :root {
-	/* base surfaces */
-	--bg: #07070d;
-	--bg-2: #0b0b16;
-	--surface: 255, 255, 255; /* used as rgba(var(--surface), a) for glass */
-	--ink: #eef0fb; /* primary text */
-	--ink-soft: #c3c7dd;
-	--muted: #9298b4; /* secondary text */
-	--faint: #7e84a6; /* meta text — AA (>4.5:1) on --bg */
-	--line: rgba(255, 255, 255, 0.09);
-	--line-strong: rgba(255, 255, 255, 0.16);
+	/* base surfaces — Linear: near-black canvas, elevated panels, white→grey text */
+	--bg: #08090a; /* near-black canvas */
+	--bg-2: #131416; /* elevated panels, cards, icon chips */
+	--surface: 255, 255, 255; /* for rgba() tints on dark */
+	--ink: #f7f8f8; /* primary text */
+	--ink-soft: #d0d3d8; /* dimmer body text */
+	--muted: #8a8f98; /* secondary text */
+	--faint: #62666d; /* meta / labels */
+	--line: rgba(255, 255, 255, 0.08); /* hairline borders */
+	--line-strong: rgba(255, 255, 255, 0.14);
 
-	/* accents */
-	--violet: #7c5cff; /* borders, glows, fills */
-	--violet-text: #9d86ff; /* lighter — for small violet text (AA on glass) */
-	--violet-deep: #5b3fd6; /* darker — for white text on violet */
-	--cyan: #22d3ee;
-	--fuchsia: #e879f9;
+	/* monochrome — white is the accent (Linear's white CTA on black). no hue. */
+	--violet: #f7f8f8; /* "accent" → white */
+	--violet-text: #f7f8f8; /* links / accents = white on dark */
+	--violet-deep: #f7f8f8; /* solid white fills with dark text */
+	--cyan: #8a8f98; /* neutral, unused in UI */
+	--fuchsia: #62666d; /* neutral, unused */
 	--accent: var(--violet);
-	--accent-grad: linear-gradient(120deg, #8b7bff, #22d3ee);
+	--accent-grad: var(--violet); /* flat white */
 
-	/* glass */
-	--glass-bg: rgba(var(--surface), 0.05);
-	--glass-bg-hover: rgba(var(--surface), 0.08);
-	--glass-blur: 16px;
+	/* glass (page is solid now; kept for any incidental use) */
+	--glass-bg: rgba(var(--surface), 0.04);
+	--glass-bg-hover: rgba(var(--surface), 0.07);
+	--glass-blur: 12px;
 
-	/* shape + motion */
-	--radius: 18px;
-	--radius-lg: 26px;
-	--radius-sm: 11px;
-	--shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset,
-		0 18px 50px -20px rgba(0, 0, 0, 0.8);
-	--shadow-glow: 0 0 0 1px var(--line),
-		0 30px 80px -30px rgba(124, 92, 255, 0.5);
+	/* shape + motion — tight radii, whisper shadows */
+	--radius: 14px;
+	--radius-lg: 16px;
+	--radius-sm: 9px;
+	--shadow: 0 1px 2px rgba(0, 0, 0, 0.3),
+		0 4px 14px -6px rgba(0, 0, 0, 0.5);
+	--shadow-glow: 0 1px 2px rgba(0, 0, 0, 0.3),
+		0 12px 32px -12px rgba(0, 0, 0, 0.7);
 	--ease: cubic-bezier(0.22, 1, 0.36, 1);
 
 	/* fonts */
 	--font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-	--font-display: "Space Grotesk", var(--font-sans);
-	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+	--font-display: "Inter", var(--font-sans);
+	--font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	--container: 1080px;
 
@@ -70,50 +70,15 @@ body {
 	overflow-x: hidden;
 }
 
-/* ---- ambient background ---------------------------------------------- */
+/* ---- ambient background — flat, with a single whisper of accent up top --- */
 .bg-decor {
 	position: fixed;
 	inset: 0;
 	z-index: -1;
-	overflow: hidden;
 	pointer-events: none;
 	background:
-		radial-gradient(1100px 700px at 75% -10%, rgba(124, 92, 255, 0.22), transparent 60%),
-		radial-gradient(900px 600px at 10% 5%, rgba(34, 211, 238, 0.14), transparent 55%),
-		radial-gradient(800px 800px at 50% 110%, rgba(232, 121, 249, 0.12), transparent 60%),
+		radial-gradient(900px 460px at 50% -240px, rgba(255, 255, 255, 0.05), transparent 70%),
 		var(--bg);
-}
-.bg-decor::before {
-	/* subtle grid */
-	content: "";
-	position: absolute;
-	inset: 0;
-	background-image:
-		linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-	background-size: 56px 56px;
-	mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
-	-webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
-}
-.bg-decor .blob {
-	position: absolute;
-	border-radius: 50%;
-	filter: blur(70px);
-	opacity: 0.5;
-	animation: drift 22s var(--ease) infinite alternate;
-}
-.bg-decor .blob.a {
-	width: 460px; height: 460px; top: -120px; right: -80px;
-	background: radial-gradient(circle, rgba(124, 92, 255, 0.55), transparent 70%);
-}
-.bg-decor .blob.b {
-	width: 420px; height: 420px; top: 30%; left: -140px;
-	background: radial-gradient(circle, rgba(34, 211, 238, 0.4), transparent 70%);
-	animation-delay: -7s;
-}
-@keyframes drift {
-	from { transform: translate3d(0, 0, 0) scale(1); }
-	to { transform: translate3d(-40px, 50px, 0) scale(1.12); }
 }
 
 /* ---- layout helpers -------------------------------------------------- */
@@ -144,17 +109,11 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
 h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); }
 p { margin: 0 0 1rem; }
 
-a { color: var(--cyan); text-decoration: none; }
+a { color: var(--violet-text); text-decoration: none; }
 a:hover { color: var(--ink); }
 
 .gradient-text {
-	background: linear-gradient(120deg, #b9aaff 0%, #7c5cff 40%, #22d3ee 100%);
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: var(--violet-text); /* visible fallback if background-clip unsupported */
-}
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-	.gradient-text { color: transparent; }
+	color: var(--violet-text); /* flat blue accent (Agentura uses no gradient text) */
 }
 .eyebrow {
 	font-family: var(--font-mono);
@@ -193,34 +152,33 @@ a:hover { color: var(--ink); }
 	font-size: 0.95rem;
 	font-weight: 500;
 	line-height: 1;
-	padding: 0.72em 1.15em;
-	border-radius: 999px;
+	padding: 0.68em 1.05em;
+	border-radius: var(--radius-sm);
 	border: 1px solid var(--line-strong);
-	background: var(--glass-bg);
+	background: rgba(var(--surface), 0.05);
 	color: var(--ink);
 	cursor: pointer;
-	transition: transform 0.25s var(--ease), background 0.25s var(--ease),
-		border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	transition: transform 0.18s var(--ease), background 0.18s var(--ease),
+		border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
 }
 .btn:hover {
-	transform: translateY(-2px);
-	background: var(--glass-bg-hover);
+	transform: translateY(-1px);
+	background: rgba(var(--surface), 0.09);
 	border-color: var(--line-strong);
 	color: var(--ink);
 }
 .btn svg { width: 1.05em; height: 1.05em; }
 .btn-primary {
 	border-color: transparent;
-	background: var(--accent-grad);
-	color: #08080f;
+	background: var(--violet-deep);
+	color: var(--bg);
 	font-weight: 600;
-	box-shadow: 0 12px 30px -12px rgba(124, 92, 255, 0.8);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 .btn-primary:hover {
-	color: #08080f;
-	box-shadow: 0 16px 40px -12px rgba(124, 92, 255, 0.95);
+	color: var(--bg);
+	background: #e4e6e8;
+	box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.6);
 }
 .btn-sm { padding: 0.55em 0.9em; font-size: 0.85rem; }
 
@@ -267,9 +225,31 @@ img { max-width: 100%; height: auto; border-radius: 12px; }
 table { width: 100%; border-collapse: collapse; }
 th, td { border-bottom: 1px solid var(--line); padding: 0.5em 0.7em; text-align: left; }
 
+/* ---- scroll reveal (fade + slide up) --------------------------------- */
+/* `.js` gate: without JS the hidden state never applies, so content shows. */
+.js .reveal {
+	opacity: 0;
+	transform: translateY(14px);
+	transition:
+		opacity 0.6s var(--ease) var(--reveal-delay, 0ms),
+		transform 0.6s var(--ease) var(--reveal-delay, 0ms);
+	will-change: opacity, transform;
+}
+.js .reveal.is-visible {
+	opacity: 1;
+	transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	.js .reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
+
 /* ---- accessibility --------------------------------------------------- */
 :focus-visible {
-	outline: 2px solid var(--cyan);
+	outline: 2px solid var(--violet);
 	outline-offset: 3px;
 	border-radius: 4px;
 }
@@ -290,11 +270,11 @@ th, td { border-bottom: 1px solid var(--line); padding: 0.5em 0.7em; text-align:
 	z-index: 100;
 	padding: 0.6em 1em;
 	border-radius: 0 0 12px 12px;
-	background: var(--violet-deep); /* white text clears AA */
-	color: #fff;
+	background: var(--violet-deep); /* white chip, dark text */
+	color: var(--bg);
 	transition: top 0.2s var(--ease);
 }
-.skip-link:focus { top: 0; color: #fff; }
+.skip-link:focus { top: 0; color: var(--bg); }
 
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after {

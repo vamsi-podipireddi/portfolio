@@ -205,3 +205,6 @@ build/
 ### Generated at build (scripts/generate-feeds.mjs) ###
 public/rss.xml
 public/sitemap.xml
+
+### Reference scrape — not part of project ###
+Agentura *
