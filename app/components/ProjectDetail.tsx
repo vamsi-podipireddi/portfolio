@@ -1,7 +1,16 @@
-import { ChevronLeft, ExternalLink } from "lucide-react";
+import {
+	ChevronLeft,
+	ChevronRight,
+	ExternalLink,
+} from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectVM } from "../lib/vm";
 import { GithubIcon } from "./GithubIcon";
+import { Lightbox } from "./Lightbox";
+import { ScrollTrailer } from "./ScrollTrailer";
 import "./ProjectDetail.css";
+
+const SCROLL_AMOUNT = 300;
 
 interface Props {
 	vm: ProjectVM;
@@ -16,6 +25,46 @@ interface Props {
 export function ProjectDetail({ vm, onBack }: Props) {
 	const Icon = vm.icon;
 
+	// Image shots (those with a real src) drive both the click-to-expand
+	// lightbox and the scroll arrows. Placeholder slots stay non-interactive.
+	// imgIndexByKey maps each image tile's key to its position in imageShots so
+	// a click opens the lightbox at the right slide regardless of placeholders.
+	const imageShots: { src: string; alt: string }[] = [];
+	const imgIndexByKey = new Map<number, number>();
+	for (const s of vm.shotsArr) {
+		if (s.src) {
+			imgIndexByKey.set(s.key, imageShots.length);
+			imageShots.push({ src: s.src, alt: s.alt ?? "" });
+		}
+	}
+	const hasImageShots = imageShots.length > 0;
+
+	const galleryRef = useRef<HTMLDivElement>(null);
+	const [canLeft, setCanLeft] = useState(false);
+	const [canRight, setCanRight] = useState(false);
+	const [lightbox, setLightbox] = useState<number | null>(null);
+
+	const updateEdges = useCallback(() => {
+		const el = galleryRef.current;
+		if (!el) return;
+		setCanLeft(el.scrollLeft > 0);
+		setCanRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+	}, []);
+
+	// Recompute reachable edges on mount, when the project changes, and on resize.
+	useEffect(() => {
+		updateEdges();
+		window.addEventListener("resize", updateEdges);
+		return () => window.removeEventListener("resize", updateEdges);
+	}, [updateEdges, vm.id]);
+
+	const scrollByTiles = (dir: -1 | 1) => {
+		galleryRef.current?.scrollBy({
+			left: dir * SCROLL_AMOUNT,
+			behavior: "smooth",
+		});
+	};
+
 	return (
 		<>
 			<div className="pd-bar">
@@ -26,11 +75,17 @@ export function ProjectDetail({ vm, onBack }: Props) {
 			</div>
 
 			<section className="pd-section">
-				<div className="ed-shot pd-hero">
-					<span className="pd-hero-label">
-						drop hero screenshot · {vm.name}
-					</span>
-				</div>
+				{vm.id === "scroll" ? (
+					<div className="pd-hero pd-hero-live">
+						<ScrollTrailer />
+					</div>
+				) : (
+					<div className="ed-shot pd-hero">
+						<span className="pd-hero-label">
+							drop hero screenshot · {vm.name}
+						</span>
+					</div>
+				)}
 
 				<div className="pd-top">
 					<div className="pd-top-main">
@@ -120,15 +175,74 @@ export function ProjectDetail({ vm, onBack }: Props) {
 				</div>
 
 				<h3 className="pd-label pd-shots-label">Screenshots</h3>
-				<div className="ed-scroll pd-gallery">
-					{vm.shotsArr.map((s) => (
-						<div key={s.key} className="ed-shot pd-shot">
-							<span className="pd-shot-label">{s.label}</span>
-						</div>
-					))}
+				<div className="pd-gallery-wrap">
+					{hasImageShots && canLeft && (
+						<button
+							type="button"
+							className="pd-arrow pd-arrow--left"
+							aria-label="Scroll screenshots left"
+							onClick={() => scrollByTiles(-1)}
+						>
+							<ChevronLeft size={18} aria-hidden="true" />
+						</button>
+					)}
+
+					<div
+						ref={galleryRef}
+						className="ed-scroll pd-gallery"
+						onScroll={updateEdges}
+					>
+						{vm.shotsArr.map((s) => {
+							if (!s.src) {
+								return (
+									<div key={s.key} className="ed-shot pd-shot">
+										<span className="pd-shot-label">{s.label}</span>
+									</div>
+								);
+							}
+							const imgIndex = imgIndexByKey.get(s.key) ?? 0;
+							return (
+								<button
+									key={s.key}
+									type="button"
+									className="pd-shot pd-shot--img"
+									aria-label={`View screenshot: ${s.alt}`}
+									onClick={() => setLightbox(imgIndex)}
+								>
+									<img
+										className="pd-shot-img"
+										src={s.src}
+										alt={s.alt}
+										loading="lazy"
+										decoding="async"
+									/>
+								</button>
+							);
+						})}
+					</div>
+
+					{hasImageShots && canRight && (
+						<button
+							type="button"
+							className="pd-arrow pd-arrow--right"
+							aria-label="Scroll screenshots right"
+							onClick={() => scrollByTiles(1)}
+						>
+							<ChevronRight size={18} aria-hidden="true" />
+						</button>
+					)}
 				</div>
 
 				<div className="pd-spacer" />
+
+				{lightbox !== null && (
+					<Lightbox
+						shots={imageShots}
+						index={lightbox}
+						onClose={() => setLightbox(null)}
+						onNavigate={setLightbox}
+					/>
+				)}
 			</section>
 		</>
 	);

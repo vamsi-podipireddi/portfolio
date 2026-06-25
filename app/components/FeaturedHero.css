@@ -27,6 +27,12 @@
 	place-items: center;
 }
 
+/* Live trailer slot: drop the 21/8 placeholder ratio, let the 16/9 trailer set height. */
+.fh-shot-live {
+	aspect-ratio: auto;
+	display: block;
+}
+
 .fh-shot-label {
 	font-family: var(--font-mono);
 	font-size: 0.72rem;

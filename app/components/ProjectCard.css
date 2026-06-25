@@ -99,6 +99,13 @@
 	font-size: 0.86rem;
 	line-height: 1.45;
 	flex: 1;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	overflow: hidden;
+	/* reserve 2 lines so 1-line pitches don't shrink the card */
+	min-height: calc(2 * 1.45em);
 }
 .pcard-meta {
 	display: flex;

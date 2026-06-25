@@ -1,0 +1,131 @@
+.lb-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 200;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: clamp(0.5rem, 2vw, 1.5rem);
+	padding: clamp(1rem, 4vw, 2.5rem);
+	background: color-mix(in srgb, var(--bg) 86%, transparent);
+	-webkit-backdrop-filter: blur(var(--glass-blur));
+	backdrop-filter: blur(var(--glass-blur));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.lb-overlay {
+		animation: lbFade 0.2s var(--ease);
+	}
+	.lb-figure {
+		animation: lbRise 0.24s var(--ease);
+	}
+}
+
+@keyframes lbFade {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes lbRise {
+	from {
+		opacity: 0;
+		transform: scale(0.97);
+	}
+}
+
+.lb-figure {
+	grid-column: 2;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.9rem;
+	min-width: 0;
+}
+
+.lb-img {
+	max-width: 90vw;
+	max-height: 78vh;
+	object-fit: contain;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-glow);
+	display: block;
+}
+
+.lb-caption {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.04em;
+	color: var(--muted);
+	text-align: center;
+	max-width: 60ch;
+}
+
+/* close (top-right) + prev/next (rail edges) share the glass control look */
+.lb-close,
+.lb-nav {
+	display: grid;
+	place-items: center;
+	color: var(--ink);
+	background: var(--glass-bg);
+	border: 1px solid var(--line2);
+	-webkit-backdrop-filter: blur(var(--glass-blur));
+	backdrop-filter: blur(var(--glass-blur));
+	cursor: pointer;
+}
+
+.lb-close {
+	position: absolute;
+	top: clamp(1rem, 4vw, 2.5rem);
+	right: clamp(1rem, 4vw, 2.5rem);
+	width: 44px;
+	height: 44px;
+	border-radius: var(--radius-sm);
+}
+
+.lb-nav {
+	width: 48px;
+	height: 48px;
+	border-radius: 999px;
+	flex: none;
+}
+
+.lb-nav--prev {
+	grid-column: 1;
+}
+
+.lb-nav--next {
+	grid-column: 3;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.lb-close,
+	.lb-nav {
+		transition:
+			background 0.18s var(--ease),
+			border-color 0.18s var(--ease);
+	}
+}
+
+.lb-close:hover,
+.lb-nav:hover:not(:disabled) {
+	background: var(--glass-bg-hover);
+	border-color: var(--line2);
+}
+
+.lb-nav:disabled {
+	opacity: 0.32;
+	cursor: default;
+}
+
+@media (max-width: 560px) {
+	.lb-img {
+		max-height: 72vh;
+	}
+	.lb-nav {
+		width: 44px;
+		height: 44px;
+	}
+}

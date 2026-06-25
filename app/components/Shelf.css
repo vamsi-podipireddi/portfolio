@@ -44,23 +44,12 @@
 	white-space: nowrap;
 }
 
+/* Auto-arranging grid — cards reflow to fit width. No horizontal scroll, no
+   half-cut card at the edge. auto-fill keeps card width steady across shelves
+   regardless of item count (a 2-item shelf left-aligns, doesn't stretch). */
 .shelf-track {
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
 	gap: 1rem;
-	overflow-x: auto;
 	padding: 0.3rem clamp(1.4rem, 3vw, 2.4rem) 0.6rem;
-	scroll-snap-type: x mandatory;
-}
-
-.shelf-card {
-	flex: 0 0 272px;
-	width: 272px;
-	scroll-snap-align: start;
-}
-
-@media (max-width: 560px) {
-	.shelf-card {
-		flex-basis: 84vw;
-		width: 84vw;
-	}
 }

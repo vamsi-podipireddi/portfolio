@@ -11,8 +11,9 @@ interface Props {
 }
 
 /**
- * Horizontal "shelf" row: serif title + mono sub + "See all" action, with a
- * scroll-snapping track of shared ProjectCards.
+ * "Shelf" row: serif title + mono sub + "See all" action, above an
+ * auto-arranging grid of shared ProjectCards that reflows to fit the width
+ * (no horizontal scroll).
  */
 export function Shelf({ title, sub, items, onOpen, onSeeAll }: Props) {
 	return (
@@ -26,14 +27,9 @@ export function Shelf({ title, sub, items, onOpen, onSeeAll }: Props) {
 					See all →
 				</button>
 			</div>
-			<div className="ed-scroll shelf-track">
+			<div className="shelf-track">
 				{items.map((p) => (
-					<ProjectCard
-						vm={p}
-						onOpen={onOpen}
-						className="shelf-card"
-						key={p.id}
-					/>
+					<ProjectCard vm={p} onOpen={onOpen} key={p.id} />
 				))}
 			</div>
 		</section>
