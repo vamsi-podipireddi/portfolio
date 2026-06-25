@@ -1094,13 +1094,24 @@ function Scenes() {
  * accommodation for the auto-playing loop (and the keyboard-reachable way to
  * stop motion, replacing the old prefers-reduced-motion park-on-still).
  */
-export function ScrollTrailer({ className = "" }: { className?: string }) {
+export function ScrollTrailer({
+	className = "",
+	onDone,
+}: { className?: string; onDone?: () => void }) {
 	const [time, setTime] = useState(0);
 	const [playing, setPlaying] = useState(true);
 	const [isFull, setIsFull] = useState(false);
 	const frameRef = useRef<HTMLDivElement>(null);
 	const visibleRef = useRef(true);
+	const timeRef = useRef(0);
+	const onDoneRef = useRef(onDone);
 	const toggle = () => setPlaying((p) => !p);
+
+	// Keep the latest onDone in a ref so the rAF loop can call it without
+	// re-subscribing the driver effect or re-rendering the heavy scene tree.
+	useEffect(() => {
+		onDoneRef.current = onDone;
+	}, [onDone]);
 
 	// Toggle native fullscreen on the trailer frame (webkit-prefixed fallback
 	// for Safari). The ResizeObserver re-fits the canvas to the new box.
@@ -1176,10 +1187,15 @@ export function ScrollTrailer({ className = "" }: { className?: string }) {
 			if (last === null) last = ts;
 			const dt = (ts - last) / 1000;
 			last = ts;
-			setTime((t) => {
-				const next = t + dt;
-				return next >= DUR ? next % DUR : next;
-			});
+			let next = timeRef.current + dt;
+			if (next >= DUR) {
+				// Full play-through: wrap and signal completion (the featured
+				// carousel uses this to advance to the next trailer).
+				next %= DUR;
+				onDoneRef.current?.();
+			}
+			timeRef.current = next;
+			setTime(next);
 			raf = requestAnimationFrame(step);
 		};
 		raf = requestAnimationFrame(step);

@@ -1,5 +1,4 @@
 import { type ChangeEvent, useMemo, useState } from "react";
-import { AboutStrip } from "../components/AboutStrip";
 import { BuildingNow } from "../components/BuildingNow";
 import { CategoryPills } from "../components/CategoryPills";
 import { FeaturedHero } from "../components/FeaturedHero";
@@ -7,7 +6,6 @@ import { Header } from "../components/Header";
 import { ProjectDetail } from "../components/ProjectDetail";
 import { ResultsGrid } from "../components/ResultsGrid";
 import { Shelf } from "../components/Shelf";
-import { TopCharts } from "../components/TopCharts";
 import {
 	CATEGORIES,
 	PROFILE,
@@ -25,7 +23,7 @@ export function meta() {
 
 // Curated editorial shelves (ids reference PROJECTS).
 const SHELVES = [
-	{ title: "New & Notable", sub: "fresh", ids: ["scroll", "lekha", "statusline", "oldphoto"] },
+	{ title: "New & Notable", sub: "fresh", ids: ["scroll", "trump", "statusline"] },
 	{ title: "AI / ML", sub: "intelligence", ids: ["lekha", "oldphoto"] },
 	{ title: "Arcade", sub: "coming soon", ids: ["hextris", "g2048", "hexgl", "darkroom"] },
 ];
@@ -70,19 +68,18 @@ export default function Home() {
 		active: c.id === cat,
 	}));
 
-	const shelves = SHELVES.map((s) => ({
-		title: s.title,
-		sub: s.sub,
-		items: s.ids.map((id) => byId[id]).filter(Boolean) as ProjectVM[],
-	}));
-
-	const topCharts = vms
-		.filter((p) => p.cat !== "games" && p.stars != null)
-		.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0))
-		.map((p, i) => ({ ...p, rankTxt: String(i + 1).padStart(2, "0") }));
-
-	const countProjects = vms.filter((p) => p.cat !== "games").length;
-	const countLive = vms.filter((p) => p.status === "live").length;
+	// Dedup across shelves (first shelf wins) so no card repeats down the page;
+	// drop any shelf left empty.
+	const shelves = (() => {
+		const seen = new Set<string>();
+		return SHELVES.map((s) => {
+			const items = s.ids
+				.map((id) => byId[id])
+				.filter((v): v is ProjectVM => !!v && !seen.has(v.id));
+			for (const v of items) seen.add(v.id);
+			return { title: s.title, sub: s.sub, items };
+		}).filter((s) => s.items.length > 0);
+	})();
 
 	const activeCatLabel = CATEGORIES.find((c) => c.id === cat)?.label ?? "All";
 	const n = filtered.length;
@@ -90,7 +87,11 @@ export default function Home() {
 		? `${n} result${n === 1 ? "" : "s"} for “${query.trim()}”`
 		: `${n} in ${activeCatLabel}`;
 
-	const hero = byId.scroll ?? vms[0];
+	// Featured rotator: trailer-backed projects cross-dissolve in this order.
+	const featured = ["scroll", "trump"]
+		.map((id) => byId[id])
+		.filter((v): v is ProjectVM => !!v);
+	const heroVms = featured.length > 0 ? featured : [vms[0]];
 	const selected = (sel ? byId[sel] : undefined) ?? vms[0];
 
 	if (view === "detail") {
@@ -104,18 +105,12 @@ export default function Home() {
 	return (
 		<div className="store">
 			<Header
-				name={PROFILE.name}
+				name={SITE_TITLE}
 				query={query}
 				onSearch={onSearch}
 				github={PROFILE.github}
 			/>
-			<AboutStrip
-				name={PROFILE.name}
-				tagline={PROFILE.tagline}
-				buildingShort={PROFILE.buildingShort}
-				countProjects={countProjects}
-				countLive={countLive}
-			/>
+			<FeaturedHero vms={heroVms} onOpen={openDetail} />
 			<CategoryPills cats={cats} onSelect={selectCat} />
 
 			{showResults ? (
@@ -127,7 +122,6 @@ export default function Home() {
 				/>
 			) : (
 				<>
-					<FeaturedHero vm={hero} onOpen={openDetail} />
 					{shelves.map((s) => (
 						<Shelf
 							key={s.title}
@@ -137,22 +131,9 @@ export default function Home() {
 							onOpen={openDetail}
 						/>
 					))}
-					<TopCharts items={topCharts} onOpen={openDetail} />
 					<BuildingNow building={PROFILE.building} />
 				</>
 			)}
-
-			<footer className="store-footer">
-				<span>© 2026 — {PROFILE.name}</span>
-				<span className="store-footer-links">
-					<a href={PROFILE.github} target="_blank" rel="noopener noreferrer">
-						GitHub ↗
-					</a>
-					<a href={PROFILE.site} target="_blank" rel="noopener noreferrer">
-						Live site ↗
-					</a>
-				</span>
-			</footer>
 		</div>
 	);
 }

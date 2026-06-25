@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ProjectVM } from "../lib/vm";
 import { GithubIcon } from "./GithubIcon";
 import { Lightbox } from "./Lightbox";
-import { ScrollTrailer } from "./ScrollTrailer";
+import { TRAILERS } from "./trailers";
 import "./ProjectDetail.css";
 
 const SCROLL_AMOUNT = 300;
@@ -24,6 +24,7 @@ interface Props {
  */
 export function ProjectDetail({ vm, onBack }: Props) {
 	const Icon = vm.icon;
+	const Trailer = TRAILERS[vm.id];
 
 	// Image shots (those with a real src) drive both the click-to-expand
 	// lightbox and the scroll arrows. Placeholder slots stay non-interactive.
@@ -75,9 +76,9 @@ export function ProjectDetail({ vm, onBack }: Props) {
 			</div>
 
 			<section className="pd-section">
-				{vm.id === "scroll" ? (
+				{Trailer ? (
 					<div className="pd-hero pd-hero-live">
-						<ScrollTrailer />
+						<Trailer />
 					</div>
 				) : (
 					<div className="ed-shot pd-hero">
