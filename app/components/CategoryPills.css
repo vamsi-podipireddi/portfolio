@@ -1,7 +1,7 @@
 .cp-row {
 	display: flex;
 	gap: 0.5rem;
-	padding: 0.4rem clamp(1.4rem, 3vw, 2.4rem) 1.3rem;
+	padding: clamp(1.8rem, 3.2vw, 2.6rem) clamp(1.4rem, 3vw, 2.4rem) 1.3rem;
 	overflow-x: auto;
 	border-bottom: 1px solid var(--line);
 }

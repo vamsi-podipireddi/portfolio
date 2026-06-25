@@ -16,19 +16,12 @@
 	background: var(--card2);
 }
 
+/* Thin brand-gradient accent band carrying just the status badge — no big
+   icon (the body tile already shows it), keeps color without the dead space. */
 .pcard-shot {
 	position: relative;
-	aspect-ratio: 16 / 10;
+	height: 46px;
 	border-bottom: 1px solid var(--line);
-	display: grid;
-	place-items: center;
-}
-.pcard-shot-label {
-	font-family: var(--font-mono);
-	font-size: 0.6rem;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: var(--faint);
 }
 .pcard-status {
 	position: absolute;
@@ -114,11 +107,6 @@
 	font-family: var(--font-mono);
 	font-size: 0.64rem;
 	color: var(--faint);
-}
-.pcard-stars {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.35em;
 }
 .pcard-upd {
 	margin-left: auto;

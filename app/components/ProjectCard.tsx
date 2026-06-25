@@ -1,4 +1,3 @@
-import { Star } from "lucide-react";
 import type { CSSProperties, KeyboardEvent } from "react";
 import type { ProjectVM } from "../lib/vm";
 import "./ProjectCard.css";
@@ -36,8 +35,7 @@ export function ProjectCard({ vm, onOpen, className = "", style }: Props) {
 			onClick={open}
 			onKeyDown={onKey}
 		>
-			<div className="ed-shot pcard-shot">
-				<span className="pcard-shot-label">screenshot</span>
+			<div className="pcard-shot" style={{ background: vm.shotBg }}>
 				<span className="pcard-status">
 					<span className="pcard-dot" style={{ background: vm.stColor }} />
 					{vm.stLabel}
@@ -61,12 +59,6 @@ export function ProjectCard({ vm, onOpen, className = "", style }: Props) {
 				<p className="pcard-pitch">{vm.pitch}</p>
 
 				<div className="pcard-meta">
-					{vm.showStars && (
-						<span className="pcard-stars">
-							<Star size={11} aria-hidden="true" />
-							{vm.starsTxt}
-						</span>
-					)}
 					<span>{vm.langTxt}</span>
 					<span className="pcard-upd">{vm.updTxt}</span>
 				</div>

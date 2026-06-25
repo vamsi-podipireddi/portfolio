@@ -14,7 +14,7 @@ export function Header({ name, query, onSearch, github }: Props) {
 	return (
 		<header className="hd">
 			<div className="hd-brand">
-				<span className="hd-mono">VP</span>
+				<span className="hd-mono">VA</span>
 				<span className="hd-name">{name}</span>
 			</div>
 			<div className="hd-search">

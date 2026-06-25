@@ -2,21 +2,81 @@
 	padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.4rem) 0;
 }
 
+.fh-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 0.9rem;
+}
+
 .fh-eyebrow {
 	font-family: var(--font-mono);
 	font-size: 0.68rem;
 	letter-spacing: 0.22em;
 	text-transform: uppercase;
 	color: var(--muted);
-	margin: 0 0 0.9rem;
+	margin: 0;
+}
+
+/* Slide indicators — active dot widens into a pill. */
+.fh-dots {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.fh-dot {
+	width: 7px;
+	height: 7px;
+	padding: 0;
+	border: none;
+	border-radius: 999px;
+	background: var(--line2);
+	cursor: pointer;
+	transition:
+		width 200ms var(--ease, ease),
+		background 200ms var(--ease, ease);
+}
+
+.fh-dot:hover {
+	background: var(--ink2);
+}
+
+.fh-dot.is-on {
+	width: 22px;
+	background: var(--ink);
+}
+
+/* Slide track: both cards share one grid cell so the box is as tall as the
+   active card; overflow clips the off-screen neighbour during a slide. */
+.fh-stack {
+	display: grid;
+	overflow: hidden;
+	border-radius: 22px;
 }
 
 .fh-card {
 	position: relative;
+	grid-area: 1 / 1;
+	align-self: start;
 	border: 1px solid var(--line);
 	border-radius: 22px;
 	overflow: hidden;
 	background: var(--card);
+	transition: transform 420ms var(--ease);
+	will-change: transform;
+}
+
+/* Direction-aware slide via a transform transition (compositor-only, so a heavy
+   trailer mount can't jank it). The incoming card mounts parked on one of these
+   offsets, then has the class removed to glide to centre; the outgoing card
+   gets the opposite offset to glide away. No offset = translateX(0) = centre. */
+.fh-x-right {
+	transform: translateX(100%);
+}
+.fh-x-left {
+	transform: translateX(-100%);
 }
 
 .fh-shot {
@@ -167,8 +227,58 @@
 	text-decoration: none;
 }
 
+/* Prev/next slide controls — glass discs centred on the trailer area. Kept
+   clear of the badge (top-left) and the trailer's own play/fullscreen controls
+   (bottom-right). Faint by default, full on hover/focus; stay usable on touch. */
+.fh-nav {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 3;
+	display: grid;
+	place-items: center;
+	width: 38px;
+	height: 38px;
+	padding: 0;
+	border-radius: 50%;
+	border: 1px solid var(--line2);
+	background: rgba(8, 9, 10, 0.55);
+	backdrop-filter: blur(6px);
+	color: var(--ink);
+	cursor: pointer;
+	opacity: 0.55;
+	transition:
+		opacity 180ms var(--ease, ease),
+		background 180ms var(--ease, ease);
+}
+
+.fh-card:hover .fh-nav,
+.fh-nav:focus-visible {
+	opacity: 1;
+}
+
+.fh-nav:hover {
+	background: rgba(8, 9, 10, 0.82);
+}
+
+.fh-nav--prev {
+	left: 0.8rem;
+}
+
+.fh-nav--next {
+	right: 0.8rem;
+}
+
 @media (max-width: 640px) {
 	.fh-actions {
 		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fh-card,
+	.fh-dot,
+	.fh-nav {
+		transition: none;
 	}
 }

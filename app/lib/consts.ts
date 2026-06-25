@@ -1,15 +1,16 @@
 // Central site data. Edit here to update the whole portfolio.
 
-import { Gamepad2, Image as ImageIcon, Inbox, SquareTerminal } from "lucide-react";
+import { Flame, Gauge, Grid3x3, Hexagon, Image as ImageIcon, Inbox, SquareTerminal } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { ScrollIcon } from "../components/ScrollIcon";
+import { TrumpIcon } from "../components/TrumpIcon";
 
 // Any icon component: lucide-react icons and our inline brand icons both satisfy this.
 export type IconType = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
 
 export const SITE = "https://vamsikrishnapodipireddi.in";
 
-export const SITE_TITLE = "Vamsi Podipireddi — Projects";
+export const SITE_TITLE = "Vamsi's Arcade";
 export const SITE_DESCRIPTION =
 	"An app-store of the small, sharp tools and learning experiences I build.";
 
@@ -74,7 +75,6 @@ export interface Project {
 	desc: string;
 	tags: string[];
 	lang?: string;
-	stars?: number;
 	updated?: string;
 	live?: string;
 	code?: string;
@@ -104,7 +104,6 @@ export const PROJECTS: Project[] = [
 		desc: "Scroll turns abstract systems ideas into things you can poke at. Trip a failure, tune a knob, and watch the trade-offs play out in real time — the kind of intuition that usually only comes from breaking production.",
 		tags: ["React", "TypeScript", "Vite"],
 		lang: "TypeScript",
-		stars: 48,
 		updated: "2w",
 		live: "https://scroll.vamsikrishnapodipireddi.in",
 		code: "https://github.com/vamsi-podipireddi/brillant",
@@ -131,6 +130,31 @@ export const PROJECTS: Project[] = [
 		},
 	},
 	{
+		id: "trump",
+		name: "Trump",
+		cat: "games",
+		hue: 60,
+		icon: TrumpIcon,
+		status: "live",
+		isNew: true,
+		pitch: "Bid, call a secret partner, take the tricks.",
+		desc: "A real-time multiplayer trick-taking card game for 2-4 players -- AI fills any empty seats. Bid for points, name the trump suit, then call a card to reveal a secret partner; the first side to capture its bid across five deals takes the match. Jump in from anywhere with a room code.",
+		tags: ["Cards", "Multiplayer", "WebSockets"],
+		lang: "JavaScript",
+		live: "https://game.trump.vamsikrishnapodipireddi.in",
+		code: "https://github.com/vamsi-podipireddi/trump-multiplayer",
+		shots: 2,
+		// Trump's felt-and-gold app-icon look (a single gold spade on emerald felt
+		// with a top-right gold sheen). Literal brand hex is intentional — this
+		// branch's tokens are monochrome, so the brand colour lives here, matching
+		// the TrumpTrailer palette and the app's actual icon.
+		brandTile: {
+			bg: "radial-gradient(125% 110% at 72% 6%, rgba(230,180,80,0.45), transparent 60%), linear-gradient(165deg, #0e3d2c, #08120e)",
+			border: "rgba(230,180,80,0.45)",
+			glyph: "#e6b450",
+		},
+	},
+	{
 		id: "lekha",
 		name: "Lekha",
 		cat: "aiml",
@@ -142,7 +166,6 @@ export const PROJECTS: Project[] = [
 		desc: "Lekha reads your inbox with a fully local model and writes back clean, plain-language summaries. No cloud, no data leaving your machine — just your mail, distilled.",
 		tags: ["Python", "FastAPI", "Local LLM"],
 		lang: "Python",
-		stars: 31,
 		updated: "5d",
 		code: "https://github.com/vamsi-podipireddi/Lekha",
 		shots: 3,
@@ -159,7 +182,6 @@ export const PROJECTS: Project[] = [
 		desc: "An offline pipeline that de-noises, upscales, and repairs old photographs end to end on AMD ROCm. No internet, no uploads — your memories never leave the room.",
 		tags: ["PyTorch", "ROCm", "Computer Vision"],
 		lang: "Python",
-		stars: 22,
 		updated: "1mo",
 		code: "https://github.com/vamsi-podipireddi/image-enhancement",
 		shots: 3,
@@ -176,7 +198,6 @@ export const PROJECTS: Project[] = [
 		desc: "A configurable status line for Claude Code that surfaces model, token usage, cost, and git state in a single tidy row — so you always know where a session stands.",
 		tags: ["Bash", "CLI", "Claude Code"],
 		lang: "Shell",
-		stars: 64,
 		updated: "1w",
 		code: "https://github.com/vamsi-podipireddi/claude-code-statusline",
 		shots: 2,
@@ -186,7 +207,7 @@ export const PROJECTS: Project[] = [
 		name: "Hextris",
 		cat: "games",
 		hue: 60,
-		icon: Gamepad2,
+		icon: Hexagon,
 		status: "soon",
 		pitch: "Fast, hexagonal puzzle action.",
 		desc: "A reference build queued up for the arcade — a frantic spin on falling-block puzzles around a central hexagon. Stand-in link for now; my own take is on the way.",
@@ -200,7 +221,7 @@ export const PROJECTS: Project[] = [
 		name: "2048",
 		cat: "games",
 		hue: 60,
-		icon: Gamepad2,
+		icon: Grid3x3,
 		status: "soon",
 		pitch: "Slide, merge, chase the tile.",
 		desc: "A reference build queued up for the arcade — the classic sliding-tile number game. Stand-in link for now; my own take is on the way.",
@@ -214,7 +235,7 @@ export const PROJECTS: Project[] = [
 		name: "HexGL",
 		cat: "games",
 		hue: 60,
-		icon: Gamepad2,
+		icon: Gauge,
 		status: "soon",
 		pitch: "Futuristic WebGL racing.",
 		desc: "A reference build queued up for the arcade — a fast, neon WebGL racer built on three.js. Stand-in link for now; my own take is on the way.",
@@ -228,7 +249,7 @@ export const PROJECTS: Project[] = [
 		name: "A Dark Room",
 		cat: "games",
 		hue: 60,
-		icon: Gamepad2,
+		icon: Flame,
 		status: "soon",
 		pitch: "A minimalist text adventure.",
 		desc: "A reference build queued up for the arcade — a quiet, text-first survival game that slowly unfolds. Stand-in link for now; my own take is on the way.",
