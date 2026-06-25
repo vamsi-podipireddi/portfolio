@@ -1,0 +1,46 @@
+.rgrid {
+	padding: clamp(1.5rem, 3vw, 2rem) clamp(1.4rem, 3vw, 2.4rem) 0;
+}
+
+.rgrid-label {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.06em;
+	color: var(--muted);
+	margin: 0 0 1.2rem;
+}
+
+.rgrid-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+}
+
+.rgrid-empty {
+	display: grid;
+	place-items: center;
+	padding: 4rem 1rem;
+	text-align: center;
+	color: var(--muted);
+}
+
+.rgrid-empty-text {
+	margin: 0;
+	font-size: 1rem;
+}
+
+.rgrid-q {
+	color: var(--ink);
+}
+
+@media (max-width: 860px) {
+	.rgrid-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 560px) {
+	.rgrid-grid {
+		grid-template-columns: 1fr;
+	}
+}
