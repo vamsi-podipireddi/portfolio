@@ -1,0 +1,48 @@
+.bn-section {
+	padding: clamp(1.8rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.4rem) 0;
+}
+
+.bn-banner {
+	position: relative;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	overflow: hidden;
+	background: var(--card);
+	display: flex;
+	align-items: center;
+	gap: 1.4rem;
+	padding: 1.5rem clamp(1.4rem, 2.6vw, 1.9rem);
+}
+
+.bn-tile {
+	flex: none;
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 13px;
+	background: oklch(0.62 0.14 60 / 0.15);
+	border: 1px solid oklch(0.66 0.14 60 / 0.34);
+	color: oklch(0.78 0.13 60);
+}
+
+.bn-body {
+	flex: 1;
+	min-width: 0;
+}
+
+.bn-label {
+	margin: 0 0 0.25rem;
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+.bn-text {
+	margin: 0;
+	color: var(--ink);
+	font-size: 1.05rem;
+	font-weight: 500;
+}

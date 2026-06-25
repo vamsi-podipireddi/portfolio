@@ -1,50 +1,61 @@
 /*
-  Design system — modern glassy / dark.
+  Design system — "app store" portfolio. Dark canvas, per-category hue accents,
+  serif display (Newsreader) + mono labels (Geist Mono) + Inter body.
   Tokens first, then base, then utilities.
 */
 
 :root {
-	/* base surfaces — Linear: near-black canvas, elevated panels, white→grey text */
+	/* surfaces */
 	--bg: #08090a; /* near-black canvas */
-	--bg-2: #131416; /* elevated panels, cards, icon chips */
-	--surface: 255, 255, 255; /* for rgba() tints on dark */
-	--ink: #f7f8f8; /* primary text */
-	--ink-soft: #d0d3d8; /* dimmer body text */
-	--muted: #8a8f98; /* secondary text */
-	--faint: #62666d; /* meta / labels */
-	--line: rgba(255, 255, 255, 0.08); /* hairline borders */
-	--line-strong: rgba(255, 255, 255, 0.14);
+	--bg2: #0c0d0f; /* faint elevation */
+	--card: #121315; /* cards / panels */
+	--card2: #191b1e; /* card hover */
+	--bg-2: var(--card); /* legacy alias */
 
-	/* monochrome — white is the accent (Linear's white CTA on black). no hue. */
-	--violet: #f7f8f8; /* "accent" → white */
-	--violet-text: #f7f8f8; /* links / accents = white on dark */
-	--violet-deep: #f7f8f8; /* solid white fills with dark text */
-	--cyan: #8a8f98; /* neutral, unused in UI */
-	--fuchsia: #62666d; /* neutral, unused */
-	--accent: var(--violet);
-	--accent-grad: var(--violet); /* flat white */
+	/* lines */
+	--line: rgba(255, 255, 255, 0.08);
+	--line2: rgba(255, 255, 255, 0.15);
+	--line-strong: var(--line2); /* legacy alias */
 
-	/* glass (page is solid now; kept for any incidental use) */
-	--glass-bg: rgba(var(--surface), 0.04);
-	--glass-bg-hover: rgba(var(--surface), 0.07);
-	--glass-blur: 12px;
+	/* text */
+	--ink: #f6f7f8; /* primary */
+	--ink2: #cfd2d7; /* body */
+	--muted: #8b909a; /* secondary */
+	--faint: #5f636b; /* meta / labels */
 
-	/* shape + motion — tight radii, whisper shadows */
+	/* chips / fills */
+	--chip: rgba(255, 255, 255, 0.05);
+	--surface: 255, 255, 255; /* for rgba() tints */
+
+	/* legacy accent aliases → ink (white CTA). New UI uses per-category oklch hues. */
+	--violet: var(--ink);
+	--violet-text: var(--ink2);
+	--violet-deep: var(--ink);
+	--cyan: var(--muted);
+	--fuchsia: var(--faint);
+	--accent: var(--ink);
+	--accent-grad: var(--ink);
+
+	/* glass (kept for incidental use) */
+	--glass-bg: rgba(var(--surface), 0.05);
+	--glass-bg-hover: rgba(var(--surface), 0.08);
+	--glass-blur: 14px;
+
+	/* shape + motion */
 	--radius: 14px;
 	--radius-lg: 16px;
 	--radius-sm: 9px;
-	--shadow: 0 1px 2px rgba(0, 0, 0, 0.3),
-		0 4px 14px -6px rgba(0, 0, 0, 0.5);
-	--shadow-glow: 0 1px 2px rgba(0, 0, 0, 0.3),
-		0 12px 32px -12px rgba(0, 0, 0, 0.7);
+	--shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px -6px rgba(0, 0, 0, 0.5);
+	--shadow-glow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -12px rgba(0, 0, 0, 0.7);
 	--ease: cubic-bezier(0.22, 1, 0.36, 1);
 
 	/* fonts */
 	--font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-	--font-display: "Inter", var(--font-sans);
+	--font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+	--font-display: var(--font-serif);
 	--font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-	--container: 1080px;
+	--container: 1320px;
 
 	color-scheme: dark;
 }
@@ -61,27 +72,27 @@ body {
 	margin: 0;
 	min-height: 100vh;
 	font-family: var(--font-sans);
-	font-size: 18px;
-	line-height: 1.7;
-	color: var(--ink-soft);
+	font-size: 16px;
+	line-height: 1.5;
+	color: var(--ink2);
 	background: var(--bg);
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 	overflow-x: hidden;
 }
 
-/* ---- ambient background — flat, with a single whisper of accent up top --- */
+/* ---- ambient background — single whisper of light up top --------------- */
 .bg-decor {
 	position: fixed;
 	inset: 0;
 	z-index: -1;
 	pointer-events: none;
 	background:
-		radial-gradient(900px 460px at 50% -240px, rgba(255, 255, 255, 0.05), transparent 70%),
+		radial-gradient(900px 460px at 50% -160px, rgba(255, 255, 255, 0.045), transparent 70%),
 		var(--bg);
 }
 
-/* ---- layout helpers -------------------------------------------------- */
+/* ---- layout helpers --------------------------------------------------- */
 .container {
 	width: 100%;
 	max-width: var(--container);
@@ -95,45 +106,38 @@ main {
 	display: block;
 }
 
-/* ---- typography ------------------------------------------------------ */
+/* ---- typography ------------------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font-display);
 	color: var(--ink);
 	line-height: 1.1;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.01em;
 	margin: 0 0 0.6rem;
-	font-weight: 600;
+	font-weight: 500;
 }
-h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
-h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
-h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); }
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
+h3 { font-size: clamp(1.3rem, 2.6vw, 1.6rem); }
 p { margin: 0 0 1rem; }
 
-a { color: var(--violet-text); text-decoration: none; }
+a { color: var(--ink2); text-decoration: none; }
 a:hover { color: var(--ink); }
 
-.gradient-text {
-	color: var(--violet-text); /* flat blue accent (Agentura uses no gradient text) */
-}
+.gradient-text { color: var(--ink); }
 .eyebrow {
 	font-family: var(--font-mono);
-	font-size: 0.78rem;
+	font-size: 0.7rem;
 	letter-spacing: 0.22em;
 	text-transform: uppercase;
-	color: var(--violet-text);
+	color: var(--muted);
 	margin: 0 0 0.9rem;
 	display: inline-flex;
 	align-items: center;
 	gap: 0.6em;
 }
-.eyebrow::before {
-	content: "";
-	width: 26px; height: 1px;
-	background: linear-gradient(90deg, var(--violet), transparent);
-}
-.lead { color: var(--muted); font-size: 1.05rem; max-width: 62ch; }
+.lead { color: var(--muted); font-size: 1.02rem; max-width: 62ch; }
 
-/* ---- glass + cards --------------------------------------------------- */
+/* ---- glass ------------------------------------------------------------ */
 .glass {
 	background: var(--glass-bg);
 	border: 1px solid var(--line);
@@ -143,90 +147,68 @@ a:hover { color: var(--ink); }
 	box-shadow: var(--shadow);
 }
 
-/* ---- buttons --------------------------------------------------------- */
+/* ---- buttons ---------------------------------------------------------- */
 .btn {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5em;
 	font-family: var(--font-sans);
-	font-size: 0.95rem;
+	font-size: 0.9rem;
 	font-weight: 500;
 	line-height: 1;
-	padding: 0.68em 1.05em;
-	border-radius: var(--radius-sm);
-	border: 1px solid var(--line-strong);
-	background: rgba(var(--surface), 0.05);
+	padding: 0.7em 1.1em;
+	border-radius: 11px;
+	border: 1px solid var(--line2);
+	background: var(--chip);
 	color: var(--ink);
 	cursor: pointer;
+	text-decoration: none;
 	transition: transform 0.18s var(--ease), background 0.18s var(--ease),
-		border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+		border-color 0.18s var(--ease);
 }
-.btn:hover {
-	transform: translateY(-1px);
-	background: rgba(var(--surface), 0.09);
-	border-color: var(--line-strong);
-	color: var(--ink);
-}
+.btn:hover { transform: translateY(-1px); background: var(--card2); color: var(--ink); }
 .btn svg { width: 1.05em; height: 1.05em; }
 .btn-primary {
 	border-color: transparent;
-	background: var(--violet-deep);
+	background: var(--ink);
 	color: var(--bg);
 	font-weight: 600;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
-.btn-primary:hover {
-	color: var(--bg);
-	background: #e4e6e8;
-	box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.6);
-}
+.btn-primary:hover { color: var(--bg); background: #e4e6e8; }
 .btn-sm { padding: 0.55em 0.9em; font-size: 0.85rem; }
 
-/* ---- tag / pill ------------------------------------------------------ */
+/* ---- tag / pill ------------------------------------------------------- */
 .tag {
 	font-family: var(--font-mono);
-	font-size: 0.72rem;
+	font-size: 0.68rem;
 	letter-spacing: 0.02em;
-	color: var(--ink-soft);
-	padding: 0.32em 0.66em;
+	color: var(--ink2);
+	padding: 0.3em 0.6em;
 	border-radius: 999px;
 	border: 1px solid var(--line);
-	background: rgba(var(--surface), 0.035);
+	background: var(--chip);
 	white-space: nowrap;
 }
 
-/* ---- code (markdown) ------------------------------------------------- */
-code {
-	font-family: var(--font-mono);
-	font-size: 0.88em;
-	padding: 0.15em 0.4em;
-	border-radius: 6px;
-	background: rgba(var(--surface), 0.07);
-	border: 1px solid var(--line);
-	overflow-wrap: break-word;
+/* ---- store utilities -------------------------------------------------- */
+/* striped "drop a screenshot here" placeholder */
+.ed-shot {
+	background-image: repeating-linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.022) 0 10px,
+		rgba(255, 255, 255, 0.05) 10px 20px
+	);
 }
-pre {
-	padding: 1.3em 1.4em;
-	border-radius: var(--radius);
-	overflow-x: auto;
-	border: 1px solid var(--line);
-	background: #0a0a14 !important;
+/* slim horizontal scrollbars on shelves / pill rows */
+.ed-scroll::-webkit-scrollbar { height: 8px; }
+.ed-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
+.ed-scroll::-webkit-scrollbar-track { background: transparent; }
+@keyframes edDot {
+	0%, 100% { opacity: 0.55; }
+	50% { opacity: 1; }
 }
-pre > code { all: unset; font-family: var(--font-mono); font-size: 0.9em; }
-blockquote {
-	border-left: 3px solid var(--violet);
-	margin: 1.5em 0;
-	padding: 0.2em 0 0.2em 1.2em;
-	color: var(--muted);
-	font-style: italic;
-}
-hr { border: none; border-top: 1px solid var(--line); margin: 2.5em 0; }
-img { max-width: 100%; height: auto; border-radius: 12px; }
-table { width: 100%; border-collapse: collapse; }
-th, td { border-bottom: 1px solid var(--line); padding: 0.5em 0.7em; text-align: left; }
 
-/* ---- scroll reveal (fade + slide up) --------------------------------- */
-/* `.js` gate: without JS the hidden state never applies, so content shows. */
+/* ---- scroll reveal (kept; opt-in via <Reveal>) ------------------------ */
 .js .reveal {
 	opacity: 0;
 	transform: translateY(14px);
@@ -235,21 +217,14 @@ th, td { border-bottom: 1px solid var(--line); padding: 0.5em 0.7em; text-align:
 		transform 0.6s var(--ease) var(--reveal-delay, 0ms);
 	will-change: opacity, transform;
 }
-.js .reveal.is-visible {
-	opacity: 1;
-	transform: none;
-}
+.js .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
-	.js .reveal {
-		opacity: 1;
-		transform: none;
-		transition: none;
-	}
+	.js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* ---- accessibility --------------------------------------------------- */
+/* ---- accessibility ---------------------------------------------------- */
 :focus-visible {
-	outline: 2px solid var(--violet);
+	outline: 2px solid var(--ink);
 	outline-offset: 3px;
 	border-radius: 4px;
 }
@@ -270,7 +245,7 @@ th, td { border-bottom: 1px solid var(--line); padding: 0.5em 0.7em; text-align:
 	z-index: 100;
 	padding: 0.6em 1em;
 	border-radius: 0 0 12px 12px;
-	background: var(--violet-deep); /* white chip, dark text */
+	background: var(--ink);
 	color: var(--bg);
 	transition: top 0.2s var(--ease);
 }
@@ -286,19 +261,7 @@ th, td { border-bottom: 1px solid var(--line); padding: 0.5em 0.7em; text-align:
 	html { scroll-behavior: auto; }
 }
 
-/* Glass fallback when backdrop-filter is unsupported: raise opacity so cards read */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-	:root {
-		--glass-bg: rgba(20, 20, 32, 0.9);
-		--glass-bg-hover: rgba(28, 28, 44, 0.94);
-	}
-}
-
-/* Touch devices: meet the 44px target guideline without enlarging desktop */
+/* Touch devices: meet the 44px target guideline */
 @media (pointer: coarse) {
 	.btn-sm { min-height: 44px; }
-}
-
-@media (max-width: 640px) {
-	body { font-size: 16.5px; }
 }

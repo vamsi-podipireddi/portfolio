@@ -1,0 +1,278 @@
+.pd-bar {
+	padding: 1.05rem clamp(1.4rem, 3vw, 2.4rem);
+	border-bottom: 1px solid var(--line);
+}
+
+.pd-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	font-family: var(--font-sans);
+	font-size: 0.86rem;
+	font-weight: 500;
+	color: var(--muted);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0.3em 0;
+}
+
+.pd-section {
+	padding: clamp(1.6rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.4rem) 0;
+}
+
+.pd-hero {
+	position: relative;
+	aspect-ratio: 21 / 8;
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	display: grid;
+	place-items: center;
+	margin-bottom: 1.6rem;
+}
+
+.pd-hero-label {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+.pd-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1.6rem;
+	flex-wrap: wrap;
+}
+
+.pd-top-main {
+	flex: 1;
+	min-width: 280px;
+}
+
+.pd-titlerow {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+	margin-bottom: 0.7rem;
+}
+
+.pd-tile {
+	flex: none;
+	display: grid;
+	place-items: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 15px;
+	border: 1px solid;
+}
+
+.pd-name {
+	margin: 0;
+	font-family: var(--font-serif);
+	font-size: clamp(2rem, 3.6vw, 2.7rem);
+	font-weight: 500;
+	color: var(--ink);
+	letter-spacing: -0.01em;
+	line-height: 1;
+}
+
+.pd-meta {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	margin-top: 0.5rem;
+}
+
+.pd-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45em;
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	color: var(--ink2);
+}
+
+.pd-dot {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+}
+
+.pd-cat {
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	color: var(--faint);
+}
+
+.pd-pitch {
+	margin: 0 0 1.1rem;
+	font-family: var(--font-serif);
+	font-size: 1.3rem;
+	font-weight: 400;
+	color: var(--ink2);
+	line-height: 1.4;
+	max-width: 56ch;
+}
+
+.pd-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.pd-tag {
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	color: var(--ink2);
+	padding: 0.32em 0.65em;
+	border-radius: 999px;
+	border: 1px solid var(--line);
+	background: var(--chip);
+}
+
+.pd-actions {
+	flex: none;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	min-width: 180px;
+}
+
+.pd-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45em;
+	font-family: var(--font-sans);
+	font-size: 0.9rem;
+	padding: 0.75em 1.3em;
+	border-radius: 11px;
+	text-decoration: none;
+}
+
+.pd-btn-primary {
+	font-weight: 600;
+	background: var(--ink);
+	color: var(--bg);
+}
+
+.pd-btn-primary:hover {
+	background: #e4e6e8;
+	color: var(--bg);
+}
+
+.pd-btn-chip {
+	font-weight: 500;
+	border: 1px solid var(--line2);
+	background: var(--chip);
+	color: var(--ink);
+}
+
+.pd-btn-chip:hover {
+	background: var(--card2);
+	color: var(--ink);
+}
+
+.pd-grid {
+	display: grid;
+	grid-template-columns: 1.6fr 1fr;
+	gap: 2rem;
+	margin: 2rem 0 0;
+	align-items: start;
+}
+
+.pd-label {
+	margin: 0 0 0.7rem;
+	font-size: 0.78rem;
+	font-family: var(--font-mono);
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+.pd-desc {
+	margin: 0;
+	color: var(--ink2);
+	font-size: 1.02rem;
+	line-height: 1.65;
+}
+
+.pd-table {
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	background: var(--card);
+	overflow: hidden;
+}
+
+.pd-trow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.8rem 1rem;
+	border-bottom: 1px solid var(--line);
+}
+
+.pd-tk {
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+.pd-tv {
+	font-size: 0.88rem;
+	color: var(--ink);
+	font-weight: 500;
+}
+
+.pd-shots-label {
+	margin: 2rem 0 0.9rem;
+}
+
+.pd-gallery {
+	display: flex;
+	gap: 1rem;
+	overflow-x: auto;
+	padding-bottom: 0.5rem;
+}
+
+.pd-shot {
+	flex: 0 0 360px;
+	aspect-ratio: 16 / 10;
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	display: grid;
+	place-items: center;
+}
+
+.pd-shot-label {
+	font-family: var(--font-mono);
+	font-size: 0.62rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--faint);
+}
+
+.pd-spacer {
+	height: clamp(2rem, 4vw, 3rem);
+}
+
+@media (max-width: 760px) {
+	.pd-top {
+		flex-direction: column;
+	}
+
+	.pd-actions {
+		width: 100%;
+		min-width: 0;
+	}
+
+	.pd-grid {
+		grid-template-columns: 1fr;
+	}
+}

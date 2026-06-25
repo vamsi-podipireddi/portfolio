@@ -1,0 +1,66 @@
+.shelf {
+	padding: clamp(1.7rem, 3vw, 2.3rem) 0 0;
+}
+
+.shelf-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0 clamp(1.4rem, 3vw, 2.4rem) 1rem;
+}
+
+.shelf-titles {
+	display: flex;
+	align-items: baseline;
+	gap: 0.7rem;
+}
+
+.shelf-title {
+	margin: 0;
+	font-family: var(--font-serif);
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: var(--ink);
+	letter-spacing: -0.01em;
+}
+
+.shelf-sub {
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.05em;
+	color: var(--faint);
+	text-transform: uppercase;
+}
+
+.shelf-seeall {
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	color: var(--muted);
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0.3em;
+	white-space: nowrap;
+}
+
+.shelf-track {
+	display: flex;
+	gap: 1rem;
+	overflow-x: auto;
+	padding: 0.3rem clamp(1.4rem, 3vw, 2.4rem) 0.6rem;
+	scroll-snap-type: x mandatory;
+}
+
+.shelf-card {
+	flex: 0 0 272px;
+	width: 272px;
+	scroll-snap-align: start;
+}
+
+@media (max-width: 560px) {
+	.shelf-card {
+		flex-basis: 84vw;
+		width: 84vw;
+	}
+}

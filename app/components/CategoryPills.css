@@ -1,0 +1,41 @@
+.cp-row {
+	display: flex;
+	gap: 0.5rem;
+	padding: 0.4rem clamp(1.4rem, 3vw, 2.4rem) 1.3rem;
+	overflow-x: auto;
+	border-bottom: 1px solid var(--line);
+}
+
+.cp-pill {
+	flex: none;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	font-family: var(--font-sans);
+	font-size: 0.84rem;
+	font-weight: 500;
+	padding: 0.5rem 0.95rem;
+	border-radius: 999px;
+	border: 1px solid var(--line);
+	background: var(--chip);
+	color: var(--ink2);
+	cursor: pointer;
+	transition: color 0.18s, border-color 0.18s;
+}
+
+.cp-pill.active {
+	background: var(--ink);
+	color: var(--bg);
+	border-color: var(--ink);
+}
+
+.cp-count {
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	color: var(--faint);
+}
+
+.cp-pill.active .cp-count {
+	color: rgba(8, 9, 10, 0.55);
+}

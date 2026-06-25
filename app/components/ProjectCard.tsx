@@ -1,46 +1,75 @@
-import { ExternalLink } from "lucide-react";
-import type { Project } from "../lib/consts";
-import { GithubIcon } from "./GithubIcon";
+import { Star } from "lucide-react";
+import type { CSSProperties, KeyboardEvent } from "react";
+import type { ProjectVM } from "../lib/vm";
 import "./ProjectCard.css";
 
 interface Props {
-	project: Project;
+	vm: ProjectVM;
+	onOpen: (id: string) => void;
+	/** Extra class merged onto the card (e.g. shelf fixed-width). */
+	className?: string;
+	style?: CSSProperties;
 }
 
-export function ProjectCard({ project }: Props) {
-	const { name, subtitle, tagline, github, live, icon: ProjectIcon, featured } = project;
+/**
+ * App-store style project card: striped screenshot slot with a status badge,
+ * accent icon tile, name + category, pitch, and a meta footer. Acts as a link
+ * to the detail view (click or Enter/Space).
+ */
+export function ProjectCard({ vm, onOpen, className = "", style }: Props) {
+	const open = () => onOpen(vm.id);
+	const onKey = (e: KeyboardEvent<HTMLElement>) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			open();
+		}
+	};
+	const Icon = vm.icon;
 
 	return (
-		<article className="project">
-			<div className="project-head">
-				<span className="glyph">
-					<ProjectIcon className="glyph-icon" size={22} aria-hidden="true" />
+		<article
+			className={`pcard ${className}`.trim()}
+			style={style}
+			role="link"
+			tabIndex={0}
+			aria-label={`${vm.name} — ${vm.catLabel}`}
+			onClick={open}
+			onKeyDown={onKey}
+		>
+			<div className="ed-shot pcard-shot">
+				<span className="pcard-shot-label">screenshot</span>
+				<span className="pcard-status">
+					<span className="pcard-dot" style={{ background: vm.stColor }} />
+					{vm.stLabel}
 				</span>
-				{featured && <span className="badge">Featured</span>}
 			</div>
 
-			<h3 className="project-title">
-				{name}
-				{subtitle && <span className="subtitle"> {subtitle}</span>}
-			</h3>
-			<p className="project-tagline">{tagline}</p>
-
-			<div className="project-links">
-				{live && (
-					<a
-						className="btn btn-primary btn-sm"
-						href={live}
-						target="_blank"
-						rel="noopener noreferrer"
+			<div className="pcard-body">
+				<div className="pcard-head">
+					<span
+						className="pcard-tile"
+						style={{ background: vm.tileBg, borderColor: vm.tileBorder }}
 					>
-						Live <ExternalLink size={15} />
-					</a>
-				)}
-				{github && (
-					<a className="btn btn-sm" href={github} target="_blank" rel="noopener noreferrer">
-						<GithubIcon size={15} /> Code
-					</a>
-				)}
+						<Icon size={20} color={vm.glyph} aria-hidden="true" />
+					</span>
+					<div className="pcard-id">
+						<h4 className="pcard-name">{vm.name}</h4>
+						<span className="pcard-cat">{vm.catLabel}</span>
+					</div>
+				</div>
+
+				<p className="pcard-pitch">{vm.pitch}</p>
+
+				<div className="pcard-meta">
+					{vm.showStars && (
+						<span className="pcard-stars">
+							<Star size={11} aria-hidden="true" />
+							{vm.starsTxt}
+						</span>
+					)}
+					<span>{vm.langTxt}</span>
+					<span className="pcard-upd">{vm.updTxt}</span>
+				</div>
 			</div>
 		</article>
 	);
