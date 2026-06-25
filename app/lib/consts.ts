@@ -1,7 +1,8 @@
 // Central site data. Edit here to update the whole portfolio.
 
-import { Cpu, Gamepad2, Image as ImageIcon, Inbox, SquareTerminal } from "lucide-react";
+import { Gamepad2, Image as ImageIcon, Inbox, SquareTerminal } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
+import { ScrollIcon } from "../components/ScrollIcon";
 
 // Any icon component: lucide-react icons and our inline brand icons both satisfy this.
 export type IconType = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
@@ -79,8 +80,14 @@ export interface Project {
 	code?: string;
 	/** Reference link (e.g. a stand-in arcade title). */
 	link?: string;
-	/** Number of screenshot slots in the gallery. */
+	/** Number of screenshot slots in the gallery (fallback placeholders). */
 	shots: number;
+	/** Real gallery screenshots, served from /public (e.g. "/shots/x.png"). */
+	shotImgs?: string[];
+	/** Alt text per screenshot, index-aligned with shotImgs. */
+	shotAlts?: string[];
+	/** Glossy brand app-icon tile override, built from design tokens. */
+	brandTile?: { bg: string; border: string; glyph: string };
 }
 
 export const PROJECTS: Project[] = [
@@ -89,7 +96,7 @@ export const PROJECTS: Project[] = [
 		name: "Scroll",
 		cat: "apps",
 		hue: 250,
-		icon: Cpu,
+		icon: ScrollIcon,
 		status: "live",
 		featured: true,
 		isNew: true,
@@ -102,6 +109,26 @@ export const PROJECTS: Project[] = [
 		live: "https://scroll.vamsikrishnapodipireddi.in",
 		code: "https://github.com/vamsi-podipireddi/brillant",
 		shots: 3,
+		shotImgs: [
+			"/shots/scroll-1.png",
+			"/shots/scroll-2.png",
+			"/shots/scroll-3.png",
+			"/shots/scroll-4.png",
+		],
+		shotAlts: [
+			"Scroll — the library shelf, books grouped by topic",
+			"Scroll — grid view of the full book library",
+			"Scroll — chapter list for Operating System Concepts",
+			"Scroll — an interactive chapter with live visualizations",
+		],
+		// Scroll's real app-logo palette (brand violet — the site tokens are
+		// monochrome on this branch, so the brand color is intentionally literal,
+		// matching the ScrollTrailer <Logo> and the app's actual icon).
+		brandTile: {
+			bg: "radial-gradient(120% 110% at 72% 6%, rgba(94,106,210,0.5), transparent 60%), linear-gradient(165deg, #23284a, #0c0e16)",
+			border: "rgba(94,106,210,0.45)",
+			glyph: "#aab2f6",
+		},
 	},
 	{
 		id: "lekha",

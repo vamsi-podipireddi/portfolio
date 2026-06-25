@@ -23,7 +23,7 @@ export interface ProjectVM extends Project {
 	hasCode: boolean;
 	hasLink: boolean;
 	metaRows: { k: string; v: string }[];
-	shotsArr: { key: number; label: string }[];
+	shotsArr: { key: number; label: string; src?: string; alt?: string }[];
 }
 
 const catLabelOf = (id: string) =>
@@ -37,9 +37,11 @@ export function toVM(p: Project): ProjectVM {
 
 	return {
 		...p,
-		tileBg: `oklch(0.62 0.14 ${p.hue} / 0.15)`,
-		tileBorder: `oklch(0.66 0.14 ${p.hue} / 0.34)`,
-		glyph: `oklch(0.78 0.13 ${p.hue})`,
+		// A brand tile (set per project) wins over the hue-derived defaults so an
+		// app can wear its real glossy app-icon look.
+		tileBg: p.brandTile?.bg ?? `oklch(0.62 0.14 ${p.hue} / 0.15)`,
+		tileBorder: p.brandTile?.border ?? `oklch(0.66 0.14 ${p.hue} / 0.34)`,
+		glyph: p.brandTile?.glyph ?? `oklch(0.78 0.13 ${p.hue})`,
 		stColor: st.color,
 		stLabel: st.label,
 		catLabel,
@@ -60,10 +62,18 @@ export function toVM(p: Project): ProjectVM {
 				v: isGame ? "Coming soon" : (p.updated ?? "—"),
 			},
 		],
-		shotsArr: Array.from({ length: p.shots || 3 }, (_, i) => ({
-			key: i,
-			label: `screen ${i + 1}`,
-		})),
+		// Prefer real screenshots when supplied; else fall back to placeholder slots.
+		shotsArr: p.shotImgs?.length
+			? p.shotImgs.map((img, i) => ({
+					key: i,
+					label: `screen ${i + 1}`,
+					src: img,
+					alt: p.shotAlts?.[i] ?? `screen ${i + 1}`,
+				}))
+			: Array.from({ length: p.shots || 3 }, (_, i) => ({
+					key: i,
+					label: `screen ${i + 1}`,
+				})),
 	};
 }
 

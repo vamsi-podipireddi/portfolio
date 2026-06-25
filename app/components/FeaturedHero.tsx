@@ -3,6 +3,7 @@ import "./FeaturedHero.css";
 import { ExternalLink } from "lucide-react";
 
 import type { ProjectVM } from "../lib/vm";
+import { ScrollTrailer } from "./ScrollTrailer";
 
 interface Props {
 	vm: ProjectVM;
@@ -16,10 +17,14 @@ export function FeaturedHero({ vm, onOpen }: Props) {
 		<section className="fh">
 			<p className="fh-eyebrow">Featured</p>
 			<div className="fh-card">
-				<div className="fh-shot ed-shot">
-					<span className="fh-shot-label">
-						drop hero screenshot · {vm.name}
-					</span>
+				<div className={`fh-shot ${vm.id === "scroll" ? "fh-shot-live" : "ed-shot"}`}>
+					{vm.id === "scroll" ? (
+						<ScrollTrailer />
+					) : (
+						<span className="fh-shot-label">
+							drop hero screenshot · {vm.name}
+						</span>
+					)}
 					<span className="fh-badge">
 						<span
 							className="fh-badge-dot"
